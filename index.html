@@ -101,6 +101,7 @@
       display: block;
       color: #9ca3af;
     }
+    .app-card-icon svg { display: block; color: #9ca3af; }
 
     .app-card-name {
       font-size: 14px;
@@ -150,6 +151,7 @@
       background: #fff;
     }
     .wish-card .app-card-icon { color: #d1d5db; }
+    .wish-card .app-card-icon svg { color: #d1d5db; }
     .wish-card .app-card-name { color: #6b7280; }
     .wish-card .app-card-desc { color: #9ca3af; }
 
@@ -299,14 +301,14 @@
     <div class="apps-grid">
 
       <a href="https://fixsauber.alltagsapps.de" class="app-card">
-        <span class="app-card-icon">✦</span>
+        <span class="app-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 3l.75 2.25L8 6l-2.25.75L5 9l-.75-2.25L2 6l2.25-.75z"/><path d="M19 15l.75 2.25L22 18l-2.25.75L19 21l-.75-2.25L16 18l2.25-.75z"/></svg></span>
         <div class="app-card-name">fixsauber <span class="badge-new">Neu</span></div>
         <div class="app-card-desc">Smarter Putzplan, der mit eurem Haushalt denkt.</div>
         <span class="app-card-tag">Haushalt</span>
       </a>
 
       <a href="https://kochplan.alltagsapps.de" class="app-card">
-        <span class="app-card-icon">◎</span>
+        <span class="app-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16a8 8 0 01-16 0z"/><path d="M12 3c0 0-2 2-2 4"/><path d="M15 5c0 0-1.5 1.5-1.5 3"/><line x1="4" y1="19" x2="20" y2="19"/></svg></span>
         <div class="app-card-name">kochplan</div>
         <div class="app-card-desc">Wochenplan fürs Essen, Einkaufsliste inklusive.</div>
         <span class="app-card-tag">Haushalt</span>
@@ -325,7 +327,7 @@
     <div class="apps-grid">
 
       <a href="https://broetchenservice.alltagsapps.de" class="app-card">
-        <span class="app-card-icon">◇</span>
+        <span class="app-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-3.5 2.5-6 6-6 1 0 2 .5 3 1 1-.5 2-1 3-1 3.5 0 6 2.5 6 6v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2z"/><line x1="3" y1="15" x2="21" y2="15"/></svg></span>
         <div class="app-card-name">brötchenservice</div>
         <div class="app-card-desc">Frühstücksbestellungen für Ferienwohnungen.</div>
         <span class="app-card-tag">Gastgeber</span>
@@ -364,19 +366,20 @@
           <input type="hidden" name="kategorie" id="kategorie">
           <div class="form-row">
             <label>Ihre Idee *</label>
-            <textarea name="idee" id="ideaInput" placeholder="z.B. Eine App, die mir beim Bestellwesen hilft…" required></textarea>
+            <textarea name="idee" id="ideaInput" placeholder="" required></textarea>
           </div>
           <div class="form-row">
-            <label>Name (optional)</label>
-            <input type="text" name="name" placeholder="Ihr Name">
+            <label>Name *</label>
+            <input type="text" name="name" placeholder="Ihr Name" required>
           </div>
           <div class="form-row">
-            <label>E-Mail (optional)</label>
-            <input type="email" name="_replyto" placeholder="Für Rückfragen">
+            <label>E-Mail *</label>
+            <input type="email" name="_replyto" placeholder="Für Rückfragen" required>
           </div>
+          <p style="font-size:11px;color:#9ca3af;line-height:1.5;margin-top:0.75rem;">Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Daten zur Bearbeitung Ihrer Anfrage zu. Mehr dazu in der <a href="/datenschutz.html" style="color:#6b7280;">Datenschutzerklärung</a>.</p>
           <div class="form-actions">
             <button type="button" class="btn" onclick="closeForm()">Abbrechen</button>
-            <button type="submit" class="btn btn-primary">Absenden</button>
+            <button type="submit" class="btn btn-primary">Absenden →</button>
           </div>
         </form>
       </div>
@@ -394,6 +397,9 @@
       document.getElementById('formSubtext').textContent = cat === 'haushalt'
         ? 'Was würde Ihren Alltag zu Hause leichter machen?'
         : 'Welcher Prozess in Ihrem Betrieb könnte eine App vertragen?';
+      document.getElementById('ideaInput').placeholder = cat === 'haushalt'
+        ? 'z.B. eine App, die mir bei der Urlaubsplanung hilft…'
+        : 'z.B. eine App, die mir beim Erstellen von Angeboten hilft…';
       document.getElementById('formContent').style.display = 'block';
       document.getElementById('successMsg').style.display = 'none';
       document.getElementById('ideaInput').value = '';
