@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Einfache Web-Apps für Haushalt und Betrieb – ohne Installation, ohne Konto.">
+  <title>alltagsapps.de – Kleine Apps. Echter Nutzen.</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    /* Header */
+    .wordmark {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+    }
+    .wordmark .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      opacity: 0.35;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: #1a1a1a;
+    }
+
+    .sub {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.65;
+      max-width: 500px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 2rem 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 0.85rem;
+    }
+
+    /* App grid */
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+      margin-bottom: 2.5rem;
+    }
+
+    .app-card {
+      background: #fff;
+      border: 1px solid #efefef;
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .app-card:hover {
+      border-color: #d1d5db;
+      background: #fafafa;
+    }
+
+    .app-card-icon {
+      font-size: 17px;
+      margin-bottom: 9px;
+      display: block;
+      color: #9ca3af;
+    }
+
+    .app-card-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .app-card-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.45;
+    }
+
+    .app-card-tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid #efefef;
+      color: #9ca3af;
+    }
+
+    .badge-new {
+      font-size: 10px;
+      font-weight: 500;
+      background: #f0fdf4;
+      color: #166534;
+      padding: 2px 7px;
+      border-radius: 20px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    /* Wish card */
+    .wish-card {
+      background: #fafafa;
+      border: 1px dashed #d1d5db;
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .wish-card:hover {
+      border-color: #9ca3af;
+      background: #fff;
+    }
+    .wish-card .app-card-icon { color: #d1d5db; }
+    .wish-card .app-card-name { color: #6b7280; }
+    .wish-card .app-card-desc { color: #9ca3af; }
+
+    /* Modal overlay */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-bg.active { display: flex; }
+
+    .modal {
+      background: #fff;
+      border: 1px solid #efefef;
+      border-radius: 14px;
+      padding: 1.75rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .modal h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    .modal p {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+
+    .form-row { margin-bottom: 10px; }
+    .form-row label {
+      display: block;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      font-size: 13px;
+      font-family: inherit;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: #1a1a1a;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus { border-color: #9ca3af; }
+    .form-row textarea { height: 90px; resize: vertical; }
+
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 1.1rem;
+    }
+
+    .btn {
+      font-size: 13px;
+      font-family: inherit;
+      border-radius: 8px;
+      padding: 7px 16px;
+      cursor: pointer;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      color: #374151;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .btn:hover { background: #f9fafb; border-color: #d1d5db; }
+    .btn-primary {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+    .btn-primary:hover { background: #333; border-color: #333; }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+    }
+    .success-msg .check {
+      font-size: 26px;
+      color: #16a34a;
+      margin-bottom: 12px;
+    }
+    .success-msg p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .footer-text {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .footer-text a {
+      color: #6b7280;
+      text-decoration: none;
+    }
+    .footer-text a:hover { color: #1a1a1a; }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: #9ca3af;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: #1a1a1a; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <a href="/" class="wordmark">alltagsapps<span class="dot"></span>de</a>
+
+    <h1>Kleine Apps.<br>Echter Nutzen.</h1>
+    <p class="sub">Einfache Web-Apps für Haushalt und Betrieb — ohne Installation, ohne Konto, einfach öffnen und loslegen.</p>
+
+    <hr>
+
+    <p class="section-label">Haushalt</p>
+    <div class="apps-grid">
+
+      <a href="https://fixsauber.alltagsapps.de" class="app-card">
+        <span class="app-card-icon">✦</span>
+        <div class="app-card-name">fixsauber <span class="badge-new">Neu</span></div>
+        <div class="app-card-desc">Smarter Putzplan, der mit eurem Haushalt denkt.</div>
+        <span class="app-card-tag">Haushalt</span>
+      </a>
+
+      <a href="https://kochplan.alltagsapps.de" class="app-card">
+        <span class="app-card-icon">◎</span>
+        <div class="app-card-name">kochplan</div>
+        <div class="app-card-desc">Wochenplan fürs Essen, Einkaufsliste inklusive.</div>
+        <span class="app-card-tag">Haushalt</span>
+      </a>
+
+      <div class="wish-card" onclick="openForm('haushalt')">
+        <span class="app-card-icon">+</span>
+        <div class="app-card-name">Ihre Idee</div>
+        <div class="app-card-desc">Welche App würde Ihren Alltag leichter machen?</div>
+        <span class="app-card-tag">App wünschen</span>
+      </div>
+
+    </div>
+
+    <p class="section-label">Betrieb &amp; KMU</p>
+    <div class="apps-grid">
+
+      <a href="https://broetchenservice.alltagsapps.de" class="app-card">
+        <span class="app-card-icon">◇</span>
+        <div class="app-card-name">brötchenservice</div>
+        <div class="app-card-desc">Frühstücksbestellungen für Ferienwohnungen.</div>
+        <span class="app-card-tag">Gastgeber</span>
+      </a>
+
+      <div class="wish-card" onclick="openForm('betrieb')">
+        <span class="app-card-icon">+</span>
+        <div class="app-card-name">Ihre Idee</div>
+        <div class="app-card-desc">Welcher Prozess in Ihrem Betrieb könnte eine App vertragen?</div>
+        <span class="app-card-tag">App wünschen</span>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="footer">
+      <span class="footer-text">Ein Projekt von <a href="https://laeuftvonallein.de">läuft von allein</a>, München</span>
+      <div class="footer-links">
+        <a href="mailto:info@alltagsapps.de">info@alltagsapps.de</a>
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <div id="formContent">
+        <h3>App-Wunsch einreichen</h3>
+        <p id="formSubtext">Beschreiben Sie kurz, was die App können soll — ich schaue es mir an.</p>
+
+        <form id="wishForm" action="https://formspree.io/f/xlgvpydv" method="POST">
+          <input type="hidden" name="kategorie" id="kategorie">
+          <div class="form-row">
+            <label>Ihre Idee *</label>
+            <textarea name="idee" id="ideaInput" placeholder="z.B. Eine App, die mir beim Bestellwesen hilft…" required></textarea>
+          </div>
+          <div class="form-row">
+            <label>Name (optional)</label>
+            <input type="text" name="name" placeholder="Ihr Name">
+          </div>
+          <div class="form-row">
+            <label>E-Mail (optional)</label>
+            <input type="email" name="_replyto" placeholder="Für Rückfragen">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn" onclick="closeForm()">Abbrechen</button>
+            <button type="submit" class="btn btn-primary">Absenden</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="success-msg" id="successMsg">
+        <div class="check">✓</div>
+        <p>Danke — Idee notiert.<br>Ich schaue mir das an und melde mich bei Interesse.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openForm(cat) {
+      document.getElementById('kategorie').value = cat;
+      document.getElementById('formSubtext').textContent = cat === 'haushalt'
+        ? 'Was würde Ihren Alltag zu Hause leichter machen?'
+        : 'Welcher Prozess in Ihrem Betrieb könnte eine App vertragen?';
+      document.getElementById('formContent').style.display = 'block';
+      document.getElementById('successMsg').style.display = 'none';
+      document.getElementById('ideaInput').value = '';
+      document.getElementById('modalBg').classList.add('active');
+    }
+
+    function closeForm() {
+      document.getElementById('modalBg').classList.remove('active');
+    }
+
+    document.getElementById('modalBg').addEventListener('click', function(e) {
+      if (e.target === this) closeForm();
+    });
+
+    document.getElementById('wishForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      try {
+        const res = await fetch(this.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+          setTimeout(closeForm, 2800);
+        }
+      } catch(err) {
+        alert('Fehler beim Senden. Bitte schreiben Sie direkt an info@alltagsapps.de');
+      }
+    });
+  </script>
+</body>
+</html>
