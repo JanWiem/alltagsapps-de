@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Einfache Web-Apps für Haushalt und Betrieb – ohne Installation, ohne Konto.">
   <title>alltagsapps.de – Kleine Apps. Echter Nutzen.</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -299,7 +294,6 @@
 
     <h1>Kleine Apps.<br>Echter Nutzen.</h1>
     <p class="sub">Einfache Web-Apps für Haushalt und Betrieb — ohne Installation, ohne Konto, einfach öffnen und loslegen.</p>
-    <p class="sub" style="margin-top:0.75rem;font-size:13px;color:#9ca3af;">Die Apps werden hier zu Demonstrationszwecken angeboten. Bei Nutzungswunsch freue ich mich über eine Nachricht an <a href="mailto:info@alltagsapps.de" style="color:#6b7280;">info@alltagsapps.de</a>.</p>
 
     <hr>
 
@@ -320,6 +314,13 @@
         <span class="app-card-tag">Haushalt</span>
       </a>
 
+      <a href="https://einkaufsliste.alltagsapps.de" class="app-card">
+        <span class="app-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
+        <div class="app-card-name">einkaufsliste</div>
+        <div class="app-card-desc">Gemeinsam einkaufen — geteilte Liste für den Haushalt.</div>
+        <span class="app-card-tag">Haushalt</span>
+      </a>
+
       <div class="wish-card" onclick="openForm('haushalt')">
         <span class="app-card-icon">+</span>
         <div class="app-card-name">Ihre Idee</div>
@@ -332,12 +333,12 @@
     <p class="section-label">Betrieb &amp; KMU</p>
     <div class="apps-grid">
 
-      <div class="app-card" style="opacity:0.6;cursor:default;">
+      <a href="https://broetchenservice.alltagsapps.de" class="app-card">
         <span class="app-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-3.5 2.5-6 6-6 1 0 2 .5 3 1 1-.5 2-1 3-1 3.5 0 6 2.5 6 6v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2z"/><line x1="3" y1="15" x2="21" y2="15"/></svg></span>
         <div class="app-card-name">brötchenservice</div>
         <div class="app-card-desc">Frühstücksbestellungen für Ferienwohnungen.</div>
-        <span class="app-card-tag">Demnächst</span>
-      </div>
+        <span class="app-card-tag">Gastgeber</span>
+      </a>
 
       <div class="wish-card" onclick="openForm('betrieb')">
         <span class="app-card-icon">+</span>
